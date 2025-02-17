@@ -63,3 +63,7 @@ color: teal;
 .container > div > ul li:hover {
   background-color: #bbdefb;
 }
+
+.controls {
+  margin-top: 10px; 
+}
