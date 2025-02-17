@@ -14,6 +14,7 @@ const alertMessage = ref(null);
 const presets = ref([
   { title: 'Quick Break', duration: 5 },
   { title: 'Focus Time', duration: 25 },
+  { title: 'Quick Snack', duration: 60 },
 ]);
 
 const formattedTime = computed(() => {
