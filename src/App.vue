@@ -3,12 +3,18 @@ import './style.css';
 import { ref, computed, onUnmounted } from 'vue';
 import ProgressBar from './components/ProgressBar.vue';
 import Controls from './components/Controls.vue';
+import Presets from './components/Presets.vue';
 
 const timeInput = ref(null);
 const timeLeft = ref(0);
 let countdownInterval;
 const totalTime = ref(0);
 const alertMessage = ref(null);
+
+const presets = ref([
+  { title: 'Quick Break', duration: 5 },
+  { title: 'Focus Time', duration: 25 },
+]);
 
 const formattedTime = computed(() => {
   const minutes = Math.floor(timeLeft.value / 60);
@@ -20,7 +26,8 @@ const startCountdown = () => {
   const time = parseInt(timeInput.value);
 
   if (isNaN(time) || time < 1 || time > 60) {
-    alert("Please enter a VALID number between 1 and 60.");
+    alertMessage.value = "Please enter a VALID number between 1 and 60.";
+    timeInput.value
     return;
   }
 
@@ -54,6 +61,12 @@ const resetCountdown = () => {
   timeInput.value = null;   
 };
 
+const loadPreset = (preset) => {  
+  timeInput.value = preset.duration;
+  startCountdown();
+};
+
+
 
 onUnmounted(() => {
   clearInterval(countdownInterval);
@@ -62,9 +75,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="container">
-    <h1>Countdown Timer</h1>
-    <label for="timeInput">Please input a timer (1-60 seconds): </label>
+    <div class="container">
+      <h1>Countdown Timer</h1>
+
+    <Presets :presets="presets" @preset-selected="loadPreset" /> <label for="timeInput">Or enter time (1-60 seconds):</label>
     <input type="number" id="timeInput" v-model="timeInput" min="1" max="60" inputmode="numeric"> 
 
     <Controls class="controls" @start="startCountdown" @stop="stopCountdown" @reset="resetCountdown" /> <div id="timerDisplay">{{ formattedTime }}</div>
