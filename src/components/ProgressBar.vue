@@ -12,12 +12,3 @@
   });
   </script>
   
-  <style scoped>
-  .progress-bar {
-    height: 10px;
-    background-color: lightgreen;
-    width: 0%;
-    transition: width 0.3s linear;
-    margin-top: 10px;
-  }
-  </style>
